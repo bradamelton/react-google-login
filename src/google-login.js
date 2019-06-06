@@ -54,16 +54,24 @@ class GoogleLogin extends Component {
       }
 
       window.gapi.load('auth2', () => {
+        console.log("loading auth 2");
         this.enableButton()
         if (!window.gapi.auth2.getAuthInstance()) {
+          console.log("no instance. initting.");
           window.gapi.auth2.init(params).then(
             res => {
+              console.log("init result.");
+              console.log(res);
               if (isSignedIn && res.isSignedIn.get()) {
                 this.handleSigninSuccess(res.currentUser.get())
               }
             },
             err => onFailure(err)
           )
+        }
+        else
+        {
+          console.log("has instance.");
         }
         if (autoLoad) {
           this.signIn()

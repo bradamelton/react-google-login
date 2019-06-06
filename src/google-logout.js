@@ -62,7 +62,7 @@ class GoogleLogout extends Component {
     })
   }
   componentWillUnmount() {
-    this.enableButton = () => {}
+    this.enableButton = () => { }
     const el = document.getElementById('google-login')
     el.parentNode.removeChild(el)
   }
@@ -72,11 +72,18 @@ class GoogleLogout extends Component {
     })
   }
   signOut() {
+    console.log("logging out.");
     if (window.gapi) {
       const auth2 = window.gapi.auth2.getAuthInstance()
       if (auth2 != null) {
         auth2.signOut().then(auth2.disconnect().then(this.props.onLogoutSuccess))
       }
+      else {
+        onFailure("could not get auth instance. Can't logout.");
+      }
+    }
+    else {
+      onFailure("window.gapi not found. Can't logout.");
     }
   }
 
